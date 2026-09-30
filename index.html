@@ -2,390 +2,251 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#06100b">
-<title>SHADHIN APP STORE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#0b0f0d">
+<title>SHADHIN STORE</title>
 
 <style>
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  width:100%;
-  min-height:100%;
-  background:#050c08;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
 body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#080c0a;
+  color:#fff;
+  min-height:100vh;
   overflow-x:hidden;
 }
 
-button,input{
-  font:inherit;
+button{
+  font-family:inherit;
+  border:0;
+  outline:0;
 }
 
-/* =====================================================
-   OPENING SCREEN
-===================================================== */
-
-#startup{
+#splash{
   position:fixed;
   inset:0;
-  z-index:99999;
+  z-index:9999;
+  background:#080c0a;
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 38%,rgba(18,104,61,.30),transparent 32%),
-    radial-gradient(circle at 50% 100%,rgba(8,70,42,.20),transparent 45%),
-    #040b07;
-  transition:
-    opacity .65s ease,
-    transform .65s ease,
-    visibility .65s ease;
+  flex-direction:column;
+  transition:.5s;
 }
 
-#startup.finished{
-  opacity:0;
-  transform:scale(1.04);
-  visibility:hidden;
-}
-
-#startupGlow{
-  position:absolute;
-  width:280px;
-  height:280px;
-  border-radius:50%;
-  background:rgba(23,220,117,.10);
-  filter:blur(70px);
-  animation:glowPulse 1.5s ease-in-out infinite;
-}
-
-.loaderContent{
-  position:relative;
-  width:min(340px,84vw);
-  text-align:center;
-  z-index:2;
-}
-
-.startLogo{
-  width:108px;
-  height:108px;
-  margin:auto;
-  border-radius:31px;
+.logo{
+  width:92px;
+  height:92px;
+  border-radius:28px;
+  background:linear-gradient(145deg,#20e77b,#079c4d);
   display:flex;
   align-items:center;
   justify-content:center;
-  background:
-    linear-gradient(145deg,#18dc7b,#08733e);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.08),
-    0 0 35px rgba(20,220,118,.25),
-    0 20px 45px rgba(0,0,0,.35);
-  animation:
-    logoEnter .75s cubic-bezier(.2,.8,.2,1),
-    logoFloat 2s ease-in-out .75s infinite;
+  font-size:31px;
+  font-weight:900;
+  box-shadow:0 0 35px rgba(24,225,112,.35);
 }
 
-.startLogo svg{
-  width:69px;
-  height:69px;
-  filter:drop-shadow(0 3px 8px rgba(0,0,0,.2));
+.logoText{
+  margin-top:18px;
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:1px;
 }
 
-.logoShield{
-  stroke-dasharray:300;
-  stroke-dashoffset:300;
-  animation:drawLogo .9s ease .15s forwards;
-}
-
-.logoCheck{
-  stroke-dasharray:100;
-  stroke-dashoffset:100;
-  animation:drawCheck .55s ease .72s forwards;
-}
-
-.startTitle{
-  margin-top:23px;
-  font-size:21px;
-  font-weight:800;
-  letter-spacing:2px;
-  opacity:0;
-  animation:textAppear .55s ease .45s forwards;
-}
-
-.startSubtitle{
-  margin-top:7px;
-  color:#78958a;
-  font-size:11px;
-  letter-spacing:.6px;
-  opacity:0;
-  animation:textAppear .55s ease .62s forwards;
-}
-
-.progressArea{
-  margin-top:34px;
-  opacity:0;
-  animation:textAppear .55s ease .75s forwards;
-}
-
-.progressInfo{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:9px;
-  font-size:11px;
-}
-
-#loadingStatus{
-  color:#78958a;
-}
-
-#loadingPercent{
-  color:#42ec94;
-  font-weight:700;
-}
-
-.progressTrack{
-  width:100%;
-  height:6px;
-  border-radius:20px;
-  background:#14221b;
+.loader{
+  width:130px;
+  height:4px;
+  background:#18231d;
+  border-radius:10px;
   overflow:hidden;
-  box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
+  margin-top:24px;
 }
 
-#progressBar{
-  width:0%;
+.loader span{
+  display:block;
   height:100%;
-  border-radius:20px;
-  background:
-    linear-gradient(90deg,#0fc96d,#48f49a);
-  box-shadow:
-    0 0 12px rgba(48,239,143,.65);
-  position:relative;
-  transition:width .04s linear;
+  width:0;
+  background:#20e77b;
+  animation:load 1.5s ease forwards;
 }
 
-#progressBar::after{
-  content:"";
-  position:absolute;
-  right:0;
-  top:0;
-  width:55px;
-  height:100%;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.65)
-  );
-  filter:blur(2px);
+@keyframes load{
+  to{width:100%}
 }
-
-.loadingHint{
-  margin-top:12px;
-  color:#506b5f;
-  font-size:10px;
-}
-
-/* =====================================================
-   MAIN APP
-===================================================== */
 
 #app{
+  display:none;
   min-height:100vh;
-  padding-bottom:88px;
+  padding-bottom:78px;
 }
 
 header{
+  padding:18px 17px 10px;
   position:sticky;
   top:0;
-  z-index:100;
-  padding:15px 16px 12px;
-  background:rgba(5,14,9,.94);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.05);
+  z-index:50;
+  background:rgba(8,12,10,.94);
+  backdrop-filter:blur(15px);
 }
 
-.headerRow{
+.topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.brandLogo{
-  width:41px;
-  height:41px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(145deg,#18dc7b,#08733e);
-  box-shadow:0 4px 16px rgba(15,200,108,.15);
-}
-
-.brandLogo svg{
-  width:26px;
-  height:26px;
-}
-
-.brandName{
-  font-size:17px;
-  font-weight:800;
+  font-size:23px;
+  font-weight:900;
   letter-spacing:.5px;
 }
 
-.brandSmall{
-  margin-top:2px;
-  color:#6e8b7e;
-  font-size:9px;
-  letter-spacing:1px;
+.brand span{
+  color:#20e77b;
 }
 
 .searchBtn{
   width:42px;
   height:42px;
-  border:1px solid rgba(255,255,255,.05);
   border-radius:14px;
-  background:#0d1d15;
+  background:#121a16;
   color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  font-size:20px;
 }
 
-.searchBtn svg{
-  width:20px;
-}
-
-.page{
+.searchBox{
   display:none;
-  padding:18px 16px;
+  margin-top:12px;
 }
 
-.page.active{
-  display:block;
+.searchBox input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:15px;
+  border:1px solid #1e3026;
+  background:#101712;
+  color:#fff;
+  outline:none;
+  font-size:15px;
+}
+
+.screen{
+  padding:12px 16px 20px;
 }
 
 .hero{
-  padding:23px;
-  border-radius:23px;
-  background:
-    radial-gradient(circle at 90% 0%,rgba(34,221,127,.13),transparent 35%),
-    linear-gradient(145deg,#102d20,#091812);
-  border:1px solid rgba(79,238,157,.07);
+  background:linear-gradient(135deg,#10251a,#0d1712);
+  border:1px solid #193323;
+  border-radius:22px;
+  padding:22px 19px;
+  margin-bottom:20px;
+  overflow:hidden;
+  position:relative;
+}
+
+.hero:after{
+  content:"";
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:#20e77b;
+  opacity:.07;
+  position:absolute;
+  right:-45px;
+  top:-45px;
 }
 
 .hero h1{
   font-size:25px;
-  line-height:1.2;
+  margin-bottom:8px;
 }
 
 .hero p{
-  margin-top:9px;
-  color:#849e92;
-  font-size:12px;
-  line-height:1.55;
+  color:#94a69c;
+  font-size:14px;
+  line-height:1.5;
 }
 
 .sectionTitle{
-  margin:25px 2px 13px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
+  margin:20px 0 12px;
 }
 
 .sectionTitle h2{
-  font-size:17px;
+  font-size:18px;
 }
 
 .sectionTitle span{
-  color:#42e992;
-  font-size:10px;
+  color:#20e77b;
+  font-size:13px;
 }
 
 .categories{
   display:flex;
-  gap:10px;
+  gap:9px;
   overflow-x:auto;
-  padding-bottom:2px;
+  scrollbar-width:none;
 }
 
 .categories::-webkit-scrollbar{
   display:none;
 }
 
-.category{
-  min-width:84px;
-  height:82px;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:17px;
-  background:#0c1b14;
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+.cat{
+  flex:0 0 auto;
+  padding:10px 15px;
+  background:#111814;
+  border:1px solid #1d2b23;
+  color:#aebbb3;
+  border-radius:30px;
+  font-size:13px;
 }
 
-.category svg{
-  width:25px;
-  height:25px;
-  stroke:#43e894;
+.cat.active{
+  background:#20e77b;
+  color:#061109;
+  border-color:#20e77b;
+  font-weight:bold;
 }
 
-.category span{
-  color:#9ab1a5;
-  font-size:10px;
-}
-
-.appsGrid{
+.apps{
   display:grid;
   grid-template-columns:1fr;
-  gap:11px;
+  gap:12px;
 }
 
-.appCard{
+.card{
+  background:#101612;
+  border:1px solid #1b2921;
+  border-radius:19px;
+  padding:14px;
   display:flex;
   align-items:center;
   gap:13px;
-  padding:13px;
-  min-height:84px;
-  border-radius:18px;
-  background:#0b1913;
-  border:1px solid rgba(255,255,255,.05);
-  transition:
-    transform .15s ease,
-    background .15s ease;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.appCard:active{
+.card:active{
   transform:scale(.98);
-  background:#102219;
 }
 
 .appIcon{
-  width:58px;
-  height:58px;
-  flex:none;
-  border-radius:15px;
+  width:62px;
+  height:62px;
+  border-radius:17px;
   object-fit:cover;
-  background:#14251d;
+  background:#18221c;
+  flex:none;
 }
 
 .appInfo{
@@ -394,1829 +255,676 @@ header{
 }
 
 .appInfo h3{
-  font-size:14px;
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.appInfo p{
+  color:#829088;
+  font-size:12px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-.appInfo p{
-  margin-top:5px;
-  color:#728c80;
-  font-size:10px;
+.appCategory{
+  color:#20e77b;
+  font-size:11px;
+  margin-top:6px;
 }
 
-.appInfo small{
-  display:block;
-  margin-top:6px;
-  color:#46e994;
-  font-size:9px;
+.downloadMini{
+  background:#173b28;
+  color:#20e77b;
+  padding:9px 11px;
+  border-radius:12px;
+  font-size:11px;
+  font-weight:bold;
 }
 
 .empty{
   text-align:center;
-  padding:58px 20px;
-  color:#6d8278;
+  padding:50px 15px;
+  color:#68756d;
 }
 
 .emptyIcon{
-  width:50px;
-  height:50px;
-  margin-bottom:15px;
-  stroke:#345548;
+  font-size:42px;
+  margin-bottom:12px;
 }
 
-.empty h3{
-  color:#9cafA5;
-  font-size:15px;
+#details{
+  display:none;
 }
 
-.empty p{
-  margin-top:7px;
-  font-size:11px;
-  line-height:1.5;
-}
-
-.searchBox{
-  height:51px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:0 14px;
-  border-radius:16px;
-  background:#0d1d15;
-  border:1px solid #19362a;
-}
-
-.searchBox svg{
-  width:20px;
-  stroke:#669582;
-}
-
-.searchBox input{
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
+.back{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:#121a16;
   color:#fff;
-  background:transparent;
-  font-size:14px;
-}
-
-.searchBox input::placeholder{
-  color:#597167;
-}
-
-.resultCount{
-  margin:16px 2px 10px;
-  color:#70897e;
-  font-size:11px;
+  font-size:22px;
+  margin-bottom:18px;
 }
 
 .detailTop{
-  text-align:center;
-  padding-top:10px;
+  display:flex;
+  gap:15px;
+  align-items:center;
 }
 
 .detailIcon{
-  width:100px;
-  height:100px;
-  border-radius:25px;
+  width:92px;
+  height:92px;
+  border-radius:23px;
   object-fit:cover;
+  background:#172019;
 }
 
-.detailTop h1{
-  margin-top:15px;
-  font-size:21px;
+.detailName{
+  font-size:24px;
+  font-weight:900;
 }
 
-.detailTop p{
+.detailDev{
+  color:#839087;
+  font-size:13px;
+  margin-top:7px;
+}
+
+.detailCategory{
+  color:#20e77b;
+  font-size:12px;
   margin-top:6px;
-  color:#789187;
-  font-size:12px;
 }
 
-.detailDescription{
-  margin-top:22px;
-  padding:16px;
-  border-radius:17px;
-  background:#0b1913;
-  border:1px solid rgba(255,255,255,.05);
-  color:#8ca398;
-  font-size:12px;
-  line-height:1.65;
-  text-align:left;
-}
-
-.downloadBtn{
+.downloadBig{
   width:100%;
-  height:49px;
-  margin-top:21px;
-  border:0;
-  border-radius:15px;
-  background:linear-gradient(90deg,#0fc96d,#43ed96);
-  color:#03130b;
-  font-weight:800;
-  letter-spacing:.5px;
+  margin-top:25px;
+  padding:15px;
+  border-radius:16px;
+  background:#20e77b;
+  color:#061109;
+  font-size:16px;
+  font-weight:900;
+}
+
+.description{
+  margin-top:25px;
+  background:#101612;
+  border:1px solid #1b2921;
+  border-radius:18px;
+  padding:17px;
+}
+
+.description h3{
+  margin-bottom:10px;
+}
+
+.description p{
+  color:#9aa69f;
+  font-size:14px;
+  line-height:1.6;
 }
 
 .bottomNav{
   position:fixed;
-  left:10px;
-  right:10px;
-  bottom:10px;
-  z-index:500;
-  height:64px;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:100;
+  height:68px;
+  background:rgba(9,13,11,.96);
+  border-top:1px solid #1a261f;
   display:flex;
-  align-items:center;
   justify-content:space-around;
-  border-radius:21px;
-  border:1px solid rgba(255,255,255,.07);
-  background:rgba(10,24,17,.95);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  align-items:center;
+  backdrop-filter:blur(15px);
 }
 
 .navItem{
-  border:0;
-  background:transparent;
-  color:#60776c;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:5px;
-  font-size:9px;
+  width:25%;
+  text-align:center;
+  color:#68756d;
+  font-size:11px;
+  cursor:pointer;
 }
 
-.navItem svg{
-  width:21px;
-  height:21px;
+.navIcon{
+  display:block;
+  font-size:20px;
+  margin-bottom:4px;
 }
 
 .navItem.active{
-  color:#42e992;
+  color:#20e77b;
 }
 
-#toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  z-index:10000;
-  transform:translate(-50%,20px);
-  padding:10px 15px;
-  border-radius:12px;
-  background:#14281f;
-  border:1px solid #24513b;
-  color:#d9eee4;
-  font-size:11px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
+#categoriesPage,
+#searchPage{
+  display:none;
 }
 
-#toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+.categoryGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
 }
 
-@keyframes logoEnter{
-  0%{
-    opacity:0;
-    transform:scale(.55) rotate(-8deg);
-  }
-  65%{
-    opacity:1;
-    transform:scale(1.07) rotate(1deg);
-  }
-  100%{
-    transform:scale(1) rotate(0);
-  }
+.categoryBox{
+  background:#101612;
+  border:1px solid #1b2921;
+  border-radius:19px;
+  padding:23px 15px;
+  text-align:center;
+  cursor:pointer;
 }
 
-@keyframes logoFloat{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-4px);
-  }
+.categoryBox div{
+  font-size:28px;
+  margin-bottom:9px;
 }
 
-@keyframes drawLogo{
-  to{
-    stroke-dashoffset:0;
-  }
+.categoryBox h3{
+  font-size:14px;
 }
 
-@keyframes drawCheck{
-  to{
-    stroke-dashoffset:0;
-  }
-}
-
-@keyframes textAppear{
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-@keyframes glowPulse{
-  0%,100%{
-    opacity:.65;
-    transform:scale(.9);
-  }
-  50%{
-    opacity:1;
-    transform:scale(1.1);
-  }
+.noResult{
+  padding:40px 10px;
+  text-align:center;
+  color:#6d7972;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     OPENING
-===================================================== -->
-
-<div id="startup">
-
-  <div id="startupGlow"></div>
-
-  <div class="loaderContent">
-
-    <div class="startLogo">
-
-      <svg viewBox="0 0 100 100" fill="none">
-
-        <path
-          class="logoShield"
-          d="M50 7L82 19V46C82 67 68 84 50 92C32 84 18 67 18 46V19L50 7Z"
-          stroke="white"
-          stroke-width="7"
-          stroke-linejoin="round"/>
-
-        <path
-          class="logoCheck"
-          d="M34 49L44 59L68 34"
-          stroke="white"
-          stroke-width="8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-
-      </svg>
-
-    </div>
-
-    <div class="startTitle">
-      SHADHIN APP STORE
-    </div>
-
-    <div class="startSubtitle">
-      Your apps. Your freedom.
-    </div>
-
-    <div class="progressArea">
-
-      <div class="progressInfo">
-        <span id="loadingStatus">Starting Store...</span>
-        <span id="loadingPercent">0%</span>
-      </div>
-
-      <div class="progressTrack">
-        <div id="progressBar"></div>
-      </div>
-
-      <div class="loadingHint" id="loadingHint">
-        Preparing your store
-      </div>
-
-    </div>
-
-  </div>
+<div id="splash">
+  <div class="logo">S</div>
+  <div class="logoText">SHADHIN STORE</div>
+  <div class="loader"><span></span></div>
 </div>
-
-
-<!-- =====================================================
-     MAIN APP
-===================================================== -->
 
 <div id="app">
 
 <header>
-
-  <div class="headerRow">
-
-    <div class="brand">
-
-      <div class="brandLogo">
-
-        <svg viewBox="0 0 100 100" fill="none">
-
-          <path
-            d="M50 8L81 20V46C81 67 67 83 50 91C33 83 19 67 19 46V20L50 8Z"
-            stroke="white"
-            stroke-width="8"
-            stroke-linejoin="round"/>
-
-          <path
-            d="M34 48L44 58L67 34"
-            stroke="white"
-            stroke-width="8"
-            stroke-linecap="round"
-            stroke-linejoin="round"/>
-
-        </svg>
-
-      </div>
-
-      <div>
-        <div class="brandName">SHADHIN</div>
-        <div class="brandSmall">APP STORE</div>
-      </div>
-
-    </div>
-
-    <button class="searchBtn" onclick="openSearch()">
-
-      <svg viewBox="0 0 24 24" fill="none">
-        <circle
-          cx="11"
-          cy="11"
-          r="7"
-          stroke="currentColor"
-          stroke-width="2"/>
-        <path
-          d="M16.5 16.5L21 21"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"/>
-      </svg>
-
-    </button>
-
+  <div class="topbar">
+    <div class="brand">SHADHIN <span>STORE</span></div>
+    <button class="searchBtn" onclick="toggleSearch()">⌕</button>
   </div>
 
+  <div class="searchBox" id="searchBox">
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search apps..."
+      oninput="searchApps(this.value)"
+    >
+  </div>
 </header>
 
+<main class="screen">
 
-<!-- HOME -->
-
-<section id="home" class="page active">
+<section id="home">
 
   <div class="hero">
-
     <h1>Discover Apps</h1>
-
-    <p>
-      Explore apps published on SHADHIN APP STORE.
-    </p>
-
+    <p>Explore and download apps from SHADHIN STORE.</p>
   </div>
 
   <div class="sectionTitle">
     <h2>Categories</h2>
+    <span onclick="showCategories()">View all</span>
   </div>
 
-  <div class="categories">
-
-    <button class="category" onclick="filterCategory('All')">
-
-      <svg viewBox="0 0 24 24" fill="none">
-
-        <rect x="4" y="4" width="6" height="6" rx="1"
-          stroke-width="2"/>
-
-        <rect x="14" y="4" width="6" height="6" rx="1"
-          stroke-width="2"/>
-
-        <rect x="4" y="14" width="6" height="6" rx="1"
-          stroke-width="2"/>
-
-        <rect x="14" y="14" width="6" height="6" rx="1"
-          stroke-width="2"/>
-
-      </svg>
-
-      <span>All</span>
-
-    </button>
-
-    <button class="category" onclick="filterCategory('AI')">
-
-      <svg viewBox="0 0 24 24" fill="none">
-
-        <path
-          d="M12 3L14 9L20 11L14 13L12 20L10 13L4 11L10 9L12 3Z"
-          stroke-width="2"/>
-
-      </svg>
-
-      <span>AI</span>
-
-    </button>
-
-    <button class="category" onclick="filterCategory('Tools')">
-
-      <svg viewBox="0 0 24 24" fill="none">
-
-        <path
-          d="M14 6L18 10L10 18H6V14L14 6Z"
-          stroke-width="2"/>
-
-      </svg>
-
-      <span>Tools</span>
-
-    </button>
-
-    <button class="category" onclick="filterCategory('Games')">
-
-      <svg viewBox="0 0 24 24" fill="none">
-
-        <rect
-          x="3"
-          y="7"
-          width="18"
-          height="11"
-          rx="3"
-          stroke-width="2"/>
-
-        <path
-          d="M8 10V15M5.5 12.5H10.5"
-          stroke-width="2"/>
-
-        <circle
-          cx="16.5"
-          cy="11"
-          r="1"
-          fill="currentColor"/>
-
-        <circle
-          cx="18.5"
-          cy="14"
-          r="1"
-          fill="currentColor"/>
-
-      </svg>
-
-      <span>Games</span>
-
-    </button>
-
+  <div class="categories" id="categoryButtons">
+    <button class="cat active" onclick="filterCategory('All',this)">All</button>
+    <button class="cat" onclick="filterCategory('AI',this)">AI</button>
+    <button class="cat" onclick="filterCategory('Music',this)">Music</button>
+    <button class="cat" onclick="filterCategory('Games',this)">Games</button>
+    <button class="cat" onclick="filterCategory('Tools',this)">Tools</button>
   </div>
 
   <div class="sectionTitle">
-
-    <h2>Available Apps</h2>
-
-    <span id="homeCount">
-      0 apps
-    </span>
-
-  </div>
-
-  <div id="homeApps" class="appsGrid"></div>
-
-</section>
-
-
-<!-- APPS -->
-
-<section id="apps" class="page">
-
-  <div class="sectionTitle">
-
     <h2>All Apps</h2>
-
-    <span id="appsCount">
-      0 apps
-    </span>
-
+    <span id="appCount"></span>
   </div>
 
-  <div id="allApps" class="appsGrid"></div>
+  <div class="apps" id="appList"></div>
 
 </section>
 
+<section id="categoriesPage">
+  <button class="back" onclick="goHome()">‹</button>
 
-<!-- SEARCH -->
+  <h1>Categories</h1>
 
-<section id="search" class="page">
-
-  <div class="searchBox">
-
-    <svg viewBox="0 0 24 24" fill="none">
-
-      <circle
-        cx="11"
-        cy="11"
-        r="7"
-        stroke-width="2"/>
-
-      <path
-        d="M16.5 16.5L21 21"
-        stroke-width="2"
-        stroke-linecap="round"/>
-
-    </svg>
-
-    <input
-      id="searchInput"
-      type="search"
-      placeholder="Search apps..."
-      autocomplete="off"
-      oninput="searchApps(this.value)">
-
-  </div>
-
-  <div
-    class="resultCount"
-    id="resultCount">
-
-    Search for an app
-
-  </div>
-
-  <div
-    id="searchResults"
-    class="appsGrid">
-
-  </div>
-
-</section>
-
-
-<!-- DETAIL -->
-
-<section id="detail" class="page">
-
-  <div id="detailContent"></div>
-
-</section>
-
-
-<!-- PROFILE -->
-
-<section id="profile" class="page">
-
-  <div class="hero">
-
-    <h1>SHADHIN APP STORE</h1>
-
-    <p>
-      Discover and download apps from your personal app marketplace.
-    </p>
-
-  </div>
-
-  <div class="sectionTitle">
-
-    <h2>Store Information</h2>
-
-  </div>
-
-  <div class="appCard">
-
-    <div class="appInfo">
-
-      <h3>Published Apps</h3>
-
-      <p id="profileCount">
-        0 apps available
-      </p>
-
+  <div class="categoryGrid">
+    <div class="categoryBox" onclick="selectCategory('AI')">
+      <div>🤖</div>
+      <h3>AI Apps</h3>
     </div>
 
-  </div>
+    <div class="categoryBox" onclick="selectCategory('Music')">
+      <div>🎵</div>
+      <h3>Music</h3>
+    </div>
 
+    <div class="categoryBox" onclick="selectCategory('Games')">
+      <div>🎮</div>
+      <h3>Games</h3>
+    </div>
+
+    <div class="categoryBox" onclick="selectCategory('Tools')">
+      <div>🛠️</div>
+      <h3>Tools</h3>
+    </div>
+  </div>
 </section>
 
+<section id="searchPage">
+  <h2>Search Results</h2>
+  <div class="apps" id="searchResults"></div>
+</section>
 
-<!-- BOTTOM NAV -->
+<section id="details">
+  <button class="back" onclick="goHome()">‹</button>
+
+  <div class="detailTop">
+    <img class="detailIcon" id="detailIcon">
+
+    <div>
+      <div class="detailName" id="detailName"></div>
+      <div class="detailDev" id="detailDev"></div>
+      <div class="detailCategory" id="detailCategory"></div>
+    </div>
+  </div>
+
+  <button class="downloadBig" id="downloadButton">
+    DOWNLOAD APK
+  </button>
+
+  <div class="description">
+    <h3>About this app</h3>
+    <p id="detailDescription"></p>
+  </div>
+</section>
+
+</main>
 
 <nav class="bottomNav">
 
-  <button
-    class="navItem active"
-    data-page="home"
-    onclick="showPage('home',this)">
-
-    <svg viewBox="0 0 24 24" fill="none">
-
-      <path
-        d="M4 11L12 4L20 11V20H14V14H10V20H4V11Z"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linejoin="round"/>
-
-    </svg>
-
+  <div class="navItem active" onclick="goHome()">
+    <span class="navIcon">⌂</span>
     Home
+  </div>
 
-  </button>
-
-
-  <button
-    class="navItem"
-    data-page="apps"
-    onclick="showPage('apps',this)">
-
-    <svg viewBox="0 0 24 24" fill="none">
-
-      <rect x="4" y="4" width="6" height="6" rx="1"
-        stroke="currentColor" stroke-width="2"/>
-
-      <rect x="14" y="4" width="6" height="6" rx="1"
-        stroke="currentColor" stroke-width="2"/>
-
-      <rect x="4" y="14" width="6" height="6" rx="1"
-        stroke="currentColor" stroke-width="2"/>
-
-      <rect x="14" y="14" width="6" height="6" rx="1"
-        stroke="currentColor" stroke-width="2"/>
-
-    </svg>
-
-    Apps
-
-  </button>
-
-
-  <button
-    class="navItem"
-    data-page="search"
-    onclick="openSearch()">
-
-    <svg viewBox="0 0 24 24" fill="none">
-
-      <circle
-        cx="11"
-        cy="11"
-        r="7"
-        stroke="currentColor"
-        stroke-width="2"/>
-
-      <path
-        d="M16.5 16.5L21 21"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"/>
-
-    </svg>
-
+  <div class="navItem" onclick="showSearch()">
+    <span class="navIcon">⌕</span>
     Search
+  </div>
 
-  </button>
+  <div class="navItem" onclick="showCategories()">
+    <span class="navIcon">▦</span>
+    Categories
+  </div>
 
-
-  <button
-    class="navItem"
-    data-page="profile"
-    onclick="showPage('profile',this)">
-
-    <svg viewBox="0 0 24 24" fill="none">
-
-      <circle
-        cx="12"
-        cy="8"
-        r="4"
-        stroke="currentColor"
-        stroke-width="2"/>
-
-      <path
-        d="M4 21C4.8 16.5 7.5 14 12 14C16.5 14 19.2 16.5 20 21"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"/>
-
-    </svg>
-
-    Profile
-
-  </button>
+  <div class="navItem" onclick="goHome()">
+    <span class="navIcon">◉</span>
+    Apps
+  </div>
 
 </nav>
 
 </div>
 
-<div id="toast"></div>
-
-
 <script>
 
-/* =====================================================
-   ONLINE STORE CONFIGURATION
-===================================================== */
+let allApps = [];
+let currentCategory = "All";
 
-/*
-   GitHub Pages-এ index.html এবং apps.json
-   একই জায়গায় থাকলে এটি কাজ করবে।
+/* Load online apps.json */
+async function loadApps(){
 
-   উদাহরণ:
+  const list = document.getElementById("appList");
 
-   https://username.github.io/shadhin-app-store/apps.json
-
-   পরে তোমার GitHub Pages URL জানা গেলে
-   ONLINE_APPS_URL-এ সেটি বসানো যাবে।
-*/
-
-const ONLINE_APPS_URL = "./apps.json";
-
-
-/* =====================================================
-   APP DATA
-===================================================== */
-
-let apps = [];
-
-
-/* =====================================================
-   LOAD ONLINE APP CATALOG
-===================================================== */
-
-async function loadOnlineApps(){
+  list.innerHTML = `
+    <div class="empty">
+      <div class="emptyIcon">⏳</div>
+      Loading apps...
+    </div>
+  `;
 
   try{
 
-    const response =
-      await fetch(
-        ONLINE_APPS_URL +
-        "?v=" +
-        Date.now(),
-        {
-          method:"GET",
-          cache:"no-store"
-        }
-      );
-
+    const response = await fetch("./apps.json?time=" + Date.now());
 
     if(!response.ok){
-
-      throw new Error(
-        "Catalog request failed"
-      );
-
+      throw new Error("apps.json not found");
     }
 
+    allApps = await response.json();
 
-    const data =
-      await response.json();
-
-
-    if(!Array.isArray(data)){
-
-      throw new Error(
-        "Invalid app catalog"
-      );
-
+    if(!Array.isArray(allApps)){
+      allApps = [];
     }
 
-
-    apps =
-      data.filter(app =>
-        app &&
-        typeof app === "object"
-      );
-
-
-    return true;
+    renderApps(allApps);
 
   }catch(error){
 
-    console.log(
-      "Online app catalog could not be loaded:",
-      error
-    );
+    allApps = [];
 
-
-    /*
-       Internet/data না পাওয়া গেলে
-       Store crash করবে না।
-    */
-
-    apps = [];
-
-    return false;
-
-  }
-
-}
-
-
-/* =====================================================
-   STARTUP SOUND
-===================================================== */
-
-function playStartupCompleteSound(){
-
-  try{
-
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    if(!AudioContext) return;
-
-    const audio =
-      new AudioContext();
-
-    const now =
-      audio.currentTime;
-
-    const master =
-      audio.createGain();
-
-    master.gain.setValueAtTime(
-      0.0001,
-      now
-    );
-
-    master.gain.exponentialRampToValueAtTime(
-      0.13,
-      now + 0.025
-    );
-
-    master.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + 0.65
-    );
-
-    master.connect(audio.destination);
-
-
-    const osc1 =
-      audio.createOscillator();
-
-    osc1.type = "sine";
-
-    osc1.frequency.setValueAtTime(
-      620,
-      now
-    );
-
-    osc1.frequency.exponentialRampToValueAtTime(
-      880,
-      now + 0.18
-    );
-
-    osc1.connect(master);
-
-    osc1.start(now);
-    osc1.stop(now + 0.28);
-
-
-    const osc2 =
-      audio.createOscillator();
-
-    osc2.type = "sine";
-
-    osc2.frequency.setValueAtTime(
-      880,
-      now + 0.12
-    );
-
-    osc2.frequency.exponentialRampToValueAtTime(
-      1180,
-      now + 0.35
-    );
-
-    osc2.connect(master);
-
-    osc2.start(now + 0.12);
-    osc2.stop(now + 0.45);
-
-
-    setTimeout(()=>{
-      try{
-        audio.close();
-      }catch(e){}
-    },800);
-
-  }catch(e){}
-
-}
-
-
-/* =====================================================
-   STARTUP LOADING
-===================================================== */
-
-async function startStore(){
-
-  const bar =
-    document.getElementById(
-      "progressBar"
-    );
-
-  const percent =
-    document.getElementById(
-      "loadingPercent"
-    );
-
-  const status =
-    document.getElementById(
-      "loadingStatus"
-    );
-
-  const hint =
-    document.getElementById(
-      "loadingHint"
-    );
-
-
-  let onlineLoaded = false;
-
-
-  /*
-     Online catalog loading
-     animation-এর সাথে শুরু হবে।
-  */
-
-  const onlineLoadPromise =
-    loadOnlineApps();
-
-
-  let progress = 0;
-
-
-  while(progress < 100){
-
-    progress +=
-      Math.floor(
-        Math.random() * 5
-      ) + 3;
-
-
-    if(progress > 100){
-      progress = 100;
-    }
-
-
-    bar.style.width =
-      progress + "%";
-
-
-    percent.textContent =
-      progress + "%";
-
-
-    if(progress < 25){
-
-      status.textContent =
-        "Starting Store...";
-
-      hint.textContent =
-        "Starting your store";
-
-    }else if(progress < 50){
-
-      status.textContent =
-        "Preparing App Catalog...";
-
-      hint.textContent =
-        "Connecting to app catalog";
-
-    }else if(progress < 70){
-
-      status.textContent =
-        "Loading Store...";
-
-      hint.textContent =
-        "Loading published apps";
-
-    }else if(progress < 90){
-
-      status.textContent =
-        "Preparing Apps...";
-
-      hint.textContent =
-        "Preparing app experience";
-
-    }else{
-
-      status.textContent =
-        "Almost Ready...";
-
-      hint.textContent =
-        "Almost ready";
-
-    }
-
-
-    await new Promise(resolve =>
-      setTimeout(resolve,38)
-    );
-
-  }
-
-
-  /*
-     100% হওয়ার আগে online data-এর
-     result নেওয়া হচ্ছে।
-  */
-
-  onlineLoaded =
-    await onlineLoadPromise;
-
-
-  /*
-     Catalog successfully loaded
-  */
-
-  if(onlineLoaded){
-
-    status.textContent =
-      "Store Ready";
-
-    hint.textContent =
-      "Apps are ready";
-
-  }else{
-
-    status.textContent =
-      "Store Ready";
-
-    hint.textContent =
-      "No online apps available";
-
-  }
-
-
-  percent.textContent =
-    "100%";
-
-  bar.style.width =
-    "100%";
-
-
-  renderApps(apps);
-
-  updateCounts();
-
-
-  playStartupCompleteSound();
-
-
-  await new Promise(resolve =>
-    setTimeout(resolve,180)
-  );
-
-
-  document
-    .getElementById("startup")
-    .classList.add("finished");
-
-}
-
-
-/* =====================================================
-   PAGE NAVIGATION
-===================================================== */
-
-function showPage(pageId,button){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(page=>{
-      page.classList.remove("active");
-    });
-
-
-  const page =
-    document.getElementById(pageId);
-
-
-  if(page){
-
-    page.classList.add("active");
-
-  }
-
-
-  document
-    .querySelectorAll(".navItem")
-    .forEach(item=>{
-      item.classList.remove("active");
-    });
-
-
-  if(button){
-
-    button.classList.add("active");
-
-  }
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function openSearch(){
-
-  const button =
-    document.querySelector(
-      '.navItem[data-page="search"]'
-    );
-
-
-  showPage(
-    "search",
-    button
-  );
-
-
-  setTimeout(()=>{
-
-    const input =
-      document.getElementById(
-        "searchInput"
-      );
-
-
-    if(input){
-
-      input.focus();
-
-    }
-
-  },100);
-
-}
-
-
-/* =====================================================
-   RENDER APPS
-===================================================== */
-
-function renderApps(list){
-
-  const home =
-    document.getElementById(
-      "homeApps"
-    );
-
-
-  const all =
-    document.getElementById(
-      "allApps"
-    );
-
-
-  home.innerHTML = "";
-  all.innerHTML = "";
-
-
-  if(!list.length){
-
-    const emptyHTML = `
-
+    list.innerHTML = `
       <div class="empty">
-
-        <svg
-          class="emptyIcon"
-          viewBox="0 0 24 24"
-          fill="none">
-
-          <rect
-            x="4"
-            y="4"
-            width="16"
-            height="16"
-            rx="3"
-            stroke="currentColor"
-            stroke-width="1.5"/>
-
-          <path
-            d="M8 12H16"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"/>
-
-        </svg>
-
-        <h3>No apps available yet</h3>
-
-        <p>
-          Apps published by the store admin
-          will appear here.
-        </p>
-
+        <div class="emptyIcon">📦</div>
+        <p>No apps available yet.</p>
       </div>
-
     `;
 
-
-    home.innerHTML =
-      emptyHTML;
-
-
-    all.innerHTML =
-      emptyHTML;
-
-
-    return;
-
+    document.getElementById("appCount").textContent = "";
   }
-
-
-  list.forEach(app=>{
-
-    const card =
-      createAppCard(app);
-
-
-    home.appendChild(
-      card.cloneNode(true)
-    );
-
-
-    /*
-       cloneNode করলে onclick থাকে না,
-       তাই clone-এ আবার click event দেওয়া হচ্ছে।
-    */
-
-    const homeCard =
-      home.lastElementChild;
-
-
-    homeCard.onclick = ()=>{
-      openDetail(app.id);
-    };
-
-
-    all.appendChild(card);
-
-  });
-
 }
 
 
-/* =====================================================
-   APP CARD
-===================================================== */
+/* Render apps */
+function renderApps(apps){
 
-function createAppCard(app){
+  const list = document.getElementById("appList");
 
-  const card =
-    document.createElement(
-      "div"
-    );
+  if(!apps.length){
 
+    list.innerHTML = `
+      <div class="empty">
+        <div class="emptyIcon">📦</div>
+        <p>No apps available yet.</p>
+      </div>
+    `;
 
-  card.className =
-    "appCard";
+    document.getElementById("appCount").textContent = "";
+    return;
+  }
 
+  document.getElementById("appCount").textContent =
+    apps.length + " app" + (apps.length > 1 ? "s" : "");
 
-  const icon =
-    escapeHTML(
-      app.icon || ""
-    );
+  list.innerHTML = apps.map((app,index)=>`
 
+    <div class="card" onclick="openDetails(${index},'main')">
 
-  const name =
-    escapeHTML(
-      app.name || "Unnamed App"
-    );
+      <img
+        class="appIcon"
+        src="${escapeHTML(app.icon || '')}"
+        onerror="this.style.display='none'"
+      >
 
+      <div class="appInfo">
+        <h3>${escapeHTML(app.name || "Unnamed App")}</h3>
 
-  const developer =
-    escapeHTML(
-      app.developer || "Developer"
-    );
+        <p>
+          ${escapeHTML(app.description || "No description available.")}
+        </p>
 
+        <div class="appCategory">
+          ${escapeHTML(app.category || "Apps")}
+        </div>
+      </div>
 
-  const category =
-    escapeHTML(
-      app.category || "Apps"
-    );
-
-
-  card.innerHTML = `
-
-    <img
-      class="appIcon"
-      src="${icon}"
-      alt="">
-
-    <div class="appInfo">
-
-      <h3>${name}</h3>
-
-      <p>${developer}</p>
-
-      <small>${category}</small>
+      <button
+        class="downloadMini"
+        onclick="event.stopPropagation();downloadApp(${index},'main')"
+      >
+        Download
+      </button>
 
     </div>
 
-  `;
-
-
-  card.onclick = ()=>{
-    openDetail(app.id);
-  };
-
-
-  return card;
-
+  `).join("");
 }
 
 
-/* =====================================================
-   SEARCH
-===================================================== */
+/* Open details */
+function openDetails(index){
 
-function searchApps(value){
-
-  const query =
-    value.trim().toLowerCase();
-
-
-  const resultsBox =
-    document.getElementById(
-      "searchResults"
-    );
-
-
-  const count =
-    document.getElementById(
-      "resultCount"
-    );
-
-
-  resultsBox.innerHTML = "";
-
-
-  if(!query){
-
-    count.textContent =
-      "Search for an app";
-
-    return;
-
-  }
-
-
-  const results =
-    apps.filter(app=>{
-
-      const name =
-        String(
-          app.name || ""
-        ).toLowerCase();
-
-
-      const developer =
-        String(
-          app.developer || ""
-        ).toLowerCase();
-
-
-      const category =
-        String(
-          app.category || ""
-        ).toLowerCase();
-
-
-      return (
-        name.includes(query) ||
-        developer.includes(query) ||
-        category.includes(query)
-      );
-
-    });
-
-
-  count.textContent =
-    results.length +
-    (
-      results.length === 1
-      ? " result"
-      : " results"
-    );
-
-
-  if(!results.length){
-
-    resultsBox.innerHTML = `
-
-      <div class="empty">
-
-        <h3>No apps found</h3>
-
-        <p>
-          Try another search.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  results.forEach(app=>{
-
-    resultsBox.appendChild(
-      createAppCard(app)
-    );
-
-  });
-
-}
-
-
-/* =====================================================
-   CATEGORY
-===================================================== */
-
-function filterCategory(category){
-
-  const list =
-    category === "All"
-    ? apps
-    : apps.filter(app=>
-        String(
-          app.category || ""
-        ).toLowerCase() ===
-        category.toLowerCase()
-      );
-
-
-  const button =
-    document.querySelector(
-      '.navItem[data-page="apps"]'
-    );
-
-
-  showPage(
-    "apps",
-    button
-  );
-
-
-  renderCategoryResults(list);
-
-}
-
-
-function renderCategoryResults(list){
-
-  const all =
-    document.getElementById(
-      "allApps"
-    );
-
-
-  all.innerHTML = "";
-
-
-  if(!list.length){
-
-    all.innerHTML = `
-
-      <div class="empty">
-
-        <h3>No apps found</h3>
-
-        <p>
-          No published apps are available
-          in this category.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  list.forEach(app=>{
-
-    all.appendChild(
-      createAppCard(app)
-    );
-
-  });
-
-}
-
-
-/* =====================================================
-   APP DETAIL
-===================================================== */
-
-function openDetail(id){
-
-  const app =
-    apps.find(item=>
-      String(item.id) ===
-      String(id)
-    );
-
+  const app = allApps[index];
 
   if(!app) return;
 
+  document.getElementById("home").style.display="none";
+  document.getElementById("categoriesPage").style.display="none";
+  document.getElementById("searchPage").style.display="none";
+  document.getElementById("details").style.display="block";
 
-  const box =
-    document.getElementById(
-      "detailContent"
-    );
+  document.getElementById("detailIcon").src = app.icon || "";
+  document.getElementById("detailName").textContent = app.name || "Unnamed App";
+  document.getElementById("detailDev").textContent = app.developer || "SHADHIN";
+  document.getElementById("detailCategory").textContent = app.category || "Apps";
+  document.getElementById("detailDescription").textContent =
+    app.description || "No description available.";
 
+  const btn = document.getElementById("downloadButton");
 
-  const icon =
-    escapeHTML(
-      app.icon || ""
-    );
-
-
-  const name =
-    escapeHTML(
-      app.name || "Unnamed App"
-    );
-
-
-  const developer =
-    escapeHTML(
-      app.developer || "Developer"
-    );
-
-
-  const category =
-    escapeHTML(
-      app.category || "Apps"
-    );
-
-
-  const description =
-    escapeHTML(
-      app.description ||
-      "No description available."
-    );
-
-
-  box.innerHTML = `
-
-    <div class="detailTop">
-
-      <img
-        class="detailIcon"
-        src="${icon}"
-        alt="">
-
-      <h1>${name}</h1>
-
-      <p>
-        ${developer}
-        •
-        ${category}
-      </p>
-
-      <button
-        class="downloadBtn"
-        id="detailDownloadBtn">
-
-        DOWNLOAD
-
-      </button>
-
-      <div class="detailDescription">
-        ${description}
-      </div>
-
-    </div>
-
-  `;
-
-
-  const downloadButton =
-    document.getElementById(
-      "detailDownloadBtn"
-    );
-
-
-  downloadButton.onclick = ()=>{
-
-    downloadApp(
-      app.apk ||
-      app.downloadUrl ||
-      ""
-    );
-
+  btn.onclick = function(){
+    downloadApp(index);
   };
 
+  window.scrollTo(0,0);
+}
 
-  showPage(
-    "detail"
+
+/* Download APK */
+function downloadApp(index){
+
+  const app = allApps[index];
+
+  if(!app || !app.downloadUrl){
+
+    alert("Download link is not available yet.");
+    return;
+  }
+
+  const link = document.createElement("a");
+
+  link.href = app.downloadUrl;
+  link.target = "_blank";
+  link.rel = "noopener";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+
+/* Category filter */
+function filterCategory(category,button){
+
+  currentCategory = category;
+
+  document.querySelectorAll(".cat").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  if(category === "All"){
+    renderApps(allApps);
+  }else{
+    renderApps(
+      allApps.filter(app =>
+        String(app.category || "").toLowerCase() ===
+        category.toLowerCase()
+      )
+    );
+  }
+}
+
+
+/* Search */
+function searchApps(value){
+
+  const q = value.trim().toLowerCase();
+
+  if(!q){
+    goHome();
+    return;
+  }
+
+  document.getElementById("home").style.display="none";
+  document.getElementById("categoriesPage").style.display="none";
+  document.getElementById("details").style.display="none";
+  document.getElementById("searchPage").style.display="block";
+
+  const results = allApps.filter(app =>
+    String(app.name || "").toLowerCase().includes(q) ||
+    String(app.description || "").toLowerCase().includes(q) ||
+    String(app.category || "").toLowerCase().includes(q)
   );
 
-}
+  const box = document.getElementById("searchResults");
 
+  if(!results.length){
 
-/* =====================================================
-   DOWNLOAD
-===================================================== */
-
-function downloadApp(url){
-
-  if(!url){
-
-    showToast(
-      "Download is not available yet."
-    );
+    box.innerHTML = `
+      <div class="noResult">
+        No apps found.
+      </div>
+    `;
 
     return;
-
   }
 
+  box.innerHTML = results.map(app=>{
 
-  try{
+    const index = allApps.indexOf(app);
 
-    const link =
-      document.createElement(
-        "a"
-      );
+    return `
+      <div class="card" onclick="openDetails(${index})">
 
+        <img
+          class="appIcon"
+          src="${escapeHTML(app.icon || '')}"
+        >
 
-    link.href =
-      url;
+        <div class="appInfo">
+          <h3>${escapeHTML(app.name || "Unnamed App")}</h3>
+          <p>${escapeHTML(app.description || "")}</p>
+          <div class="appCategory">
+            ${escapeHTML(app.category || "Apps")}
+          </div>
+        </div>
 
+        <button
+          class="downloadMini"
+          onclick="event.stopPropagation();downloadApp(${index})"
+        >
+          Download
+        </button>
 
-    link.target =
-      "_blank";
+      </div>
+    `;
 
-
-    link.rel =
-      "noopener";
-
-
-    link.setAttribute(
-      "download",
-      ""
-    );
-
-
-    document.body.appendChild(
-      link
-    );
-
-
-    link.click();
-
-
-    link.remove();
-
-  }catch(error){
-
-    /*
-       কিছু WebView download attribute
-       support না করলে সরাসরি URL খুলবে।
-    */
-
-    window.open(
-      url,
-      "_blank"
-    );
-
-  }
-
+  }).join("");
 }
 
 
-/* =====================================================
-   COUNTS
-===================================================== */
+/* Search screen */
+function showSearch(){
 
-function updateCounts(){
+  document.getElementById("home").style.display="none";
+  document.getElementById("categoriesPage").style.display="none";
+  document.getElementById("details").style.display="none";
+  document.getElementById("searchPage").style.display="block";
 
-  const total =
-    apps.length;
+  document.getElementById("searchBox").style.display="block";
 
-
-  document.getElementById(
-    "homeCount"
-  ).textContent =
-    total +
-    (
-      total === 1
-      ? " app"
-      : " apps"
-    );
-
-
-  document.getElementById(
-    "appsCount"
-  ).textContent =
-    total +
-    (
-      total === 1
-      ? " app"
-      : " apps"
-    );
-
-
-  document.getElementById(
-    "profileCount"
-  ).textContent =
-    total +
-    (
-      total === 1
-      ? " app available"
-      : " apps available"
-    );
-
+  setTimeout(()=>{
+    document.getElementById("searchInput").focus();
+  },100);
 }
 
 
-/* =====================================================
-   SECURITY / TEXT HELPERS
-===================================================== */
+/* Categories */
+function showCategories(){
 
+  document.getElementById("home").style.display="none";
+  document.getElementById("searchPage").style.display="none";
+  document.getElementById("details").style.display="none";
+  document.getElementById("categoriesPage").style.display="block";
+
+  window.scrollTo(0,0);
+}
+
+
+function selectCategory(category){
+
+  goHome();
+
+  const button = [...document.querySelectorAll(".cat")]
+    .find(b => b.textContent.trim() === category);
+
+  filterCategory(category,button);
+}
+
+
+/* Home */
+function goHome(){
+
+  document.getElementById("home").style.display="block";
+  document.getElementById("categoriesPage").style.display="none";
+  document.getElementById("searchPage").style.display="none";
+  document.getElementById("details").style.display="none";
+
+  window.scrollTo(0,0);
+}
+
+
+/* Search button */
+function toggleSearch(){
+
+  const box = document.getElementById("searchBox");
+
+  if(box.style.display === "block"){
+    box.style.display="none";
+  }else{
+    box.style.display="block";
+
+    setTimeout(()=>{
+      document.getElementById("searchInput").focus();
+    },100);
+  }
+}
+
+
+/* Basic HTML escaping */
 function escapeHTML(value){
 
   return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
+/* Start */
+setTimeout(()=>{
 
-function showToast(message){
-
-  const toast =
-    document.getElementById(
-      "toast"
-    );
-
-
-  toast.textContent =
-    message;
-
-
-  toast.classList.add(
-    "show"
-  );
-
+  document.getElementById("splash").style.opacity="0";
 
   setTimeout(()=>{
 
-    toast.classList.remove(
-      "show"
-    );
+    document.getElementById("splash").style.display="none";
+    document.getElementById("app").style.display="block";
 
-  },2200);
+    loadApps();
 
-}
+  },500);
 
-
-/* =====================================================
-   START
-===================================================== */
-
-window.addEventListener(
-  "load",
-  startStore
-);
+},1700);
 
 </script>
 
